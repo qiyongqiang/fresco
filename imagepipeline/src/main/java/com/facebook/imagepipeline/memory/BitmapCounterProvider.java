@@ -21,7 +21,7 @@ public class BitmapCounterProvider {
    * background process to be killed.
    */
   public static final int MAX_BITMAP_TOTAL_SIZE = getMaxSizeHardCap();
-  public static final int MAX_BITMAP_COUNT = 384;
+  public static final int MAX_BITMAP_COUNT = 1000;
 
   private static BitmapCounter sBitmapCounter;
 

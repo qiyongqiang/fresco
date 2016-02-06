@@ -9,11 +9,6 @@
 
 package com.facebook.imagepipeline.memory;
 
-import javax.annotation.concurrent.GuardedBy;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.Bitmap;
 import android.os.Build;
 
@@ -24,6 +19,11 @@ import com.facebook.common.references.ResourceReleaser;
 import com.facebook.imagepipeline.common.TooManyBitmapsException;
 import com.facebook.imagepipeline.nativecode.Bitmaps;
 import com.facebook.imageutils.BitmapUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.concurrent.GuardedBy;
 
 /**
  * Counts bitmaps - keeps track of both, count and total size in bytes.
@@ -51,7 +51,7 @@ public class BitmapCounter {
         try {
           decrease(value);
         } finally {
-          value.recycle();
+//          value.recycle();//android 4.0开始,内存回收交给java层
         }
       }
     };
@@ -143,7 +143,7 @@ public class BitmapCounter {
           if (countedBitmaps-- > 0) {
             decrease(bitmap);
           }
-          bitmap.recycle();
+//          bitmap.recycle();
         }
       }
       throw Throwables.propagate(exception);

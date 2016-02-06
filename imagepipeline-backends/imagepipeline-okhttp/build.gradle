@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'upaar'
 project.group = GROUP
 version = VERSION_NAME
 
@@ -9,7 +9,7 @@ dependencies {
   compile project(':fbcore')
   compile project(':imagepipeline')
 }
-apply from: rootProject.file('release.gradle')
+//apply from: rootProject.file('release.gradle')
 
 android {
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -32,5 +32,30 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
-artifacts.add('archives', sourcesJar)
+//artifacts.add('archives', sourcesJar)
 
+upinfo {
+    groupId 'com.facebook.fresco'
+    artifactId 'imagepipeline-okhttp'
+    version '0.9.1'
+}
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'http://download.crashlytics.com/maven' }
+        maven { url 'http://maven.mogujie.org/nexus/content/groups/mitpublic/' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.14.3'
+        classpath 'com.mogujie.gradle:upaar:1.0'
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'http://maven.mogujie.org/nexus/content/groups/mitpublic/' }
+        mavenLocal()
+        jcenter { url 'https://bintray.com/artifact/download/bintray/jcenter'}
+    }
+}

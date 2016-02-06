@@ -9,11 +9,11 @@
 
 package com.facebook.imagepipeline.nativecode;
 
+import com.facebook.common.soloader.SoLoaderShim;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import com.facebook.common.soloader.SoLoaderShim;
 
 /**
  * Single place responsible for loading libimagepipeline.so and its dependencies.
@@ -40,6 +40,7 @@ public class ImagePipelineNativeLoader {
   }
 
   public static void load() {
+    SoLoaderShim.loadLibrary("webp");
     SoLoaderShim.loadLibrary("imagepipeline");
   }
 }

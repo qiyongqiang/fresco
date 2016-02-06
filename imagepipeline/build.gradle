@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+apply plugin: 'upaar'
 
 project.group = GROUP
 version = VERSION_NAME
@@ -30,7 +31,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
 }
-apply from: rootProject.file('release.gradle')
+//apply from: rootProject.file('release.gradle')
 
 // We download various C++ open-source dependencies from SourceForge into nativedeps/downloads.
 // We then copy both downloaded code and our custom makefiles and headers into nativedeps/merge.
@@ -197,4 +198,31 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
-artifacts.add('archives', sourcesJar)
+//artifacts.add('archives', sourcesJar)
+
+
+upinfo {
+    groupId 'com.facebook.fresco'
+    artifactId 'imagepipeline'
+    version '0.9.2-SNAPSHOT'
+}
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'http://download.crashlytics.com/maven' }
+        maven { url 'http://maven.mogujie.org/nexus/content/groups/mitpublic/' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.14.3'
+        classpath 'com.mogujie.gradle:upaar:1.0'
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'http://maven.mogujie.org/nexus/content/groups/mitpublic/' }
+        mavenLocal()
+        jcenter { url 'https://bintray.com/artifact/download/bintray/jcenter'}
+    }
+}
